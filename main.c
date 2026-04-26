@@ -8,7 +8,7 @@
 #define FILE_NAME "grades.txt"
 
 
-void PrintMenu()
+void PrintMenu(void)
 {
     printf("\nMenu\n"
            "1 - Print grades\n"
@@ -72,7 +72,7 @@ bool Load_grades_from_file(int *arr, int size) {
 
 
 
-int main()
+int main(void)
 {
     bool Autosave = false;
     int n;
@@ -152,7 +152,7 @@ int main()
             }
             break;
             case 10:
-            AddGrade(grades,&n);
+            AddGrade(&grades,&n);
             if (Autosave == true)
             {
                 Savetofile(grades,n);

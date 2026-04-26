@@ -88,18 +88,20 @@ void EditGrade(int *arr, int size) {
     }
     
 }
-void AddGrade(int *arr, int *size){
+void AddGrade(int **arr, int *size){
     int grade;
     printf("add new grade \n");
     scanf("%d",&grade);
-    int *temp = realloc(arr, (*size + 1) * sizeof(int));
+    /* Use a temporary pointer so we do not lose the old memory if realloc fails. */
+    int *temp = realloc(*arr, (*size + 1) * sizeof(int));
     if (temp == NULL)
     {
         return;
     }
     else  {
-        arr = temp;
-        arr[*size] = grade;
+        /* Write the new pointer back to main through the double pointer. */
+        *arr = temp;
+        (*arr)[*size] = grade;
         (*size)++;
         printf("Grade succesfully added: %d\n",grade);
     }

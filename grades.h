@@ -11,7 +11,7 @@ int countPassed(int *arr, int size);
 int countFailed(int *arr, int size);
 double findAverage(int *arr, int size);
 void EditGrade(int *arr, int size);
-void AddGrade(int *arr, int *size);
+void AddGrade(int **arr, int *size);
 void DeleteGrade(int *arr, int *size);
 
 #endif
