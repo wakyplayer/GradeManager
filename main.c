@@ -74,6 +74,7 @@ bool Load_grades_from_file(int *arr, int size) {
 
 int main(void)
 {
+    bool HasGradesData = false;
     bool Autosave = false;
     int n;
     printf("How many students: \n");
@@ -98,8 +99,10 @@ int main(void)
             exit = true;
             break;
         case 1:
-        printf("\n");
-            printGrades(grades, n);
+                if (HasGradesData == true) {
+                    printGrades(grades, n);
+                    printf("\n");
+                }
             break;
         case 2:
         printf("\n");
@@ -107,50 +110,68 @@ int main(void)
                     printf("No grades available\n");
                 }
                 else {
-                    int Max = findMax(grades, n);
-                    printf("Max elements is: %d\n", Max);
+                    if (HasGradesData == true) {
+                        int Max = findMax(grades, n);
+                        printf("Max elements is: %d\n", Max);
+                    }
                 }
             break;
         case 3:
-        printf("\n");
-            double group = findAverage(grades, n);
-            if (group >= 75)
-            {
-                printf("Good group result %f\n", group);
-            }
-            else
-            {
-                printf("Group result is not very strong %f\n", group);
-            }
+                if (HasGradesData == true) {
+                    printf("\n");
+                    double group = findAverage(grades, n);
+                    
+                    if (group >= 75)
+                    {
+                        printf("Good group result %f\n", group);
+                    }
+                    else
+                    {
+                        printf("Group result is not very strong %f\n", group);
+                    }
+                }
             break;
 
         case 4:
-        printf("\n");
-            int count = countPassed(grades, n);
-            printf("Students passed %d\n", count);
+                if (HasGradesData == true) {
+                    printf("\n");
+                    int count = countPassed(grades, n);
+                    printf("Students passed %d\n", count);
+                }
             break;
 
         case 5:
-        printf("\n");
-            int cfailed = countFailed(grades, n);
-            printf("Students not passed %d\n", cfailed);
+                if (HasGradesData == true) {
+                    printf("\n");
+                    int cfailed = countFailed(grades, n);
+                    printf("Students not passed %d\n", cfailed);
+                }
             break;
 
             case 6:
             printf("Succesfully saved to file \n");
             Savetofile(grades,n);
-            break;  
+            break;
 
             case 7:
-            printf("Succesfully load from file \n");
-            Load_grades_from_file(grades,n);
+                if (Load_grades_from_file(grades,n)) {
+                    printf("Succesfully load from file \n");
+                    HasGradesData = true;
+                }
+                else {
+                    printf("Failed to load from file \n");
+                }
+            
             break;
 
             case 8:
             inputGrades(grades,n);
+                HasGradesData = true;
             break;
             case 9:
-            EditGrade(grades,n);
+                if (HasGradesData == true) {
+                    EditGrade(grades,n);
+                }
             if (Autosave == true)
             {
                 Savetofile(grades,n);
@@ -158,17 +179,23 @@ int main(void)
             break;
             case 10:
             AddGrade(&grades,&n);
+                HasGradesData = true;
             if (Autosave == true)
             {
                 Savetofile(grades,n);
             }
             break;
             case 11:
-            DeleteGrade(grades,&n);
+                if (HasGradesData == true) {
+                    DeleteGrade(grades,&n);
+                }
             if (Autosave == true)
             {
                 Savetofile(grades,n);
             }
+                if (n == 0) {
+                    HasGradesData = false;
+                }
             
             break;
             case 12:
