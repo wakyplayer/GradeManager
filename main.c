@@ -103,8 +103,13 @@ int main(void)
             break;
         case 2:
         printf("\n");
-            int Max = findMax(grades, n);
-            printf("Max elements is: %d\n", Max);
+                if (n == 0) {
+                    printf("No grades available\n");
+                }
+                else {
+                    int Max = findMax(grades, n);
+                    printf("Max elements is: %d\n", Max);
+                }
             break;
         case 3:
         printf("\n");
