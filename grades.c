@@ -24,6 +24,9 @@ void printGrades(int *arr, int size)
 }
 int findMax(int *arr, int size)
 {
+    if (size == 0) {
+        return 0;
+    }
     int Max = arr[0];
     for (int i = 0; i < size; i++)
     {
@@ -62,6 +65,10 @@ int countFailed(int *arr, int size)
 
 double findAverage(int *arr, int size)
 {
+    if (size == 0) {
+        return 0;
+    }
+    
     double sum = 0;
     for (int i = 0; i < size; i++)
     {
@@ -74,6 +81,7 @@ void EditGrade(int *arr, int size) {
     
     if (size == 0)
     {
+        printf("no grades available to edit\n");
         return;
     }
     int index;
@@ -108,6 +116,10 @@ void AddGrade(int **arr, int *size){
     
 }
 void DeleteGrade(int *arr, int *size) {
+    if (size == 0) {
+        printf("no grades available to delete\n");
+        return;
+    }
     printf("Confirm that you want to delete grade at the end (y/n)\n");
     char choice;
     scanf(" %c",&choice);
