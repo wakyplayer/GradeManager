@@ -76,9 +76,7 @@ int main(void)
 {
     bool HasGradesData = false;
     bool Autosave = false;
-    int n;
-    printf("How many students: \n");
-    scanf("%d", &n);
+    int n = ReadIntInRange("how many students\n", 0, 100);
     if (n < 0)
     {
         printf("Invalid size: %d\n", n);
@@ -91,8 +89,7 @@ int main(void)
     while (true)
     {
         PrintMenu();
-        printf("Your choice \n");
-        scanf("%d", &choice);
+        choice = ReadIntInRange("your choice\n", 0, 12);
         switch (choice)
         {
         case 0:
@@ -103,6 +100,7 @@ int main(void)
                     printGrades(grades, n);
                     printf("\n");
                 }
+                
             break;
         case 2:
         printf("\n");
@@ -114,6 +112,7 @@ int main(void)
                         int Max = findMax(grades, n);
                         printf("Max elements is: %d\n", Max);
                     }
+                    
                 }
             break;
         case 3:
@@ -129,6 +128,8 @@ int main(void)
                     {
                         printf("Group result is not very strong %f\n", group);
                     }
+                    
+                    
                 }
             break;
 
@@ -138,6 +139,7 @@ int main(void)
                     int count = countPassed(grades, n);
                     printf("Students passed %d\n", count);
                 }
+                
             break;
 
         case 5:
@@ -145,7 +147,9 @@ int main(void)
                     printf("\n");
                     int cfailed = countFailed(grades, n);
                     printf("Students not passed %d\n", cfailed);
+                    
                 }
+                
             break;
 
             case 6:
@@ -167,6 +171,7 @@ int main(void)
             case 8:
             inputGrades(grades,n);
                 HasGradesData = true;
+                    
             break;
             case 9:
                 if (HasGradesData == true) {
