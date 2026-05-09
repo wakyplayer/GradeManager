@@ -46,7 +46,7 @@ char ReadYesNo(const char* prompt){
 }
 
 
-void inputGrades(int *arr, int size)
+void InputGrades(int *arr, int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -59,7 +59,7 @@ void inputGrades(int *arr, int size)
         }
     }
 }
-void printGrades(int *arr, int size)
+void PrintGrades(int *arr, int size)
 {
 
     printf("Student grades are: \n");
@@ -84,7 +84,7 @@ int findMax(int *arr, int size)
     }
     return Max;
 }
-int countPassed(int *arr, int size)
+int CountPassed(int *arr, int size)
 {
     int count = 0;
     for (int i = 0; i < size; i++)
@@ -96,7 +96,7 @@ int countPassed(int *arr, int size)
     }
     return count;
 }
-int countFailed(int *arr, int size)
+int CountFailed(int *arr, int size)
 {
     int count = 0;
     for (int i = 0; i < size; i++)
@@ -109,7 +109,7 @@ int countFailed(int *arr, int size)
     return count;
 }
 
-double findAverage(int *arr, int size)
+double FindAverage(int *arr, int size)
 {
     if (size == 0) {
         return 0;
@@ -152,7 +152,7 @@ void AddGrade(int **arr, int *size){
     }
     
 }
-void DeleteGrade(int *arr, int *size) {
+void DeleteGrade(int **arr, int *size) {
     if (*size == 0) {
         printf("no grades available to delete\n");
         return;
