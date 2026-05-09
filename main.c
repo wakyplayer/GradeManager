@@ -25,7 +25,7 @@ void PrintMenu(void)
            "12 - Toggle auto save\n"
            "0 - Exit\n");
 }
-bool Savetofile(int *arr, int size) {
+bool SaveToFile(int *arr, int size) {
      FILE* fptr = fopen(FILE_NAME, "w");
     if (fptr == NULL)
     {
@@ -46,7 +46,7 @@ bool Savetofile(int *arr, int size) {
 }
 
 
-bool Load_grades_from_file(int *arr, int size) {
+bool Load_Grades_From_File(int *arr, int size) {
     FILE* fptr = fopen(FILE_NAME, "r");
     if (fptr == NULL)
     {
@@ -108,7 +108,7 @@ int main(void)
             break;
         case 1:
                 if (HasGradesData == true) {
-                    printGrades(grades, n);
+                    PrintGrades(grades, n);
                     printf("\n");
                 }
                 else {
@@ -135,7 +135,7 @@ int main(void)
                 if (HasGradesData == true) {
                     printf("\n");
                     
-                    double group = findAverage(grades, n);
+                    double group = FindAverage(grades, n);
                     
                     if (group >= 75) {
                         printf("Good group result %f\n", group);
@@ -154,7 +154,7 @@ int main(void)
         case 4:
                 if (HasGradesData == true) {
                     printf("\n");
-                    int count = countPassed(grades, n);
+                    int count = CountPassed(grades, n);
                     printf("Students passed %d\n", count);
                 }
                 
@@ -167,7 +167,7 @@ int main(void)
         case 5:
                 if (HasGradesData == true) {
                     printf("\n");
-                    int cfailed = countFailed(grades, n);
+                    int cfailed = CountFailed(grades, n);
                     printf("Students not passed %d\n", cfailed);
                     
                 }
@@ -178,7 +178,7 @@ int main(void)
             break;
 
             case 6:
-                if (Savetofile(grades,n)) {
+                if (SaveToFile(grades,n)) {
                     printf("Succesfully saved to file \n");
                     
                 }
@@ -189,7 +189,7 @@ int main(void)
             break;
 
             case 7:
-                if (Load_grades_from_file(grades,n)) {
+                if (Load_Grades_From_File(grades,n)) {
                     printf("Succesfully load from file \n");
                     HasGradesData = true;
                 }
@@ -199,7 +199,7 @@ int main(void)
             break;
 
             case 8:
-            inputGrades(grades,n);
+            InputGrades(grades,n);
                 HasGradesData = true;
                
                     
@@ -213,7 +213,7 @@ int main(void)
                 }
             if (Autosave == true)
             {
-                Savetofile(grades,n);
+                SaveToFile(grades,n);
             }
                 
             break;
@@ -223,7 +223,7 @@ int main(void)
                 
             if (Autosave == true)
             {
-                Savetofile(grades,n);
+                SaveToFile(grades,n);
             }
             else {
                 printf("wrong messages\n");
@@ -231,11 +231,11 @@ int main(void)
             break;
             case 11:
                 if (HasGradesData == true) {
-                    DeleteGrade(grades,&n);
+                    DeleteGrade(&grades,&n);
                 }
             if (Autosave == true)
             {
-                Savetofile(grades,n);
+                SaveToFile(grades,n);
             }
                 if (n == 0) {
                     HasGradesData = false;
@@ -250,7 +250,7 @@ int main(void)
             if (Autosave == true)
             {
                 printf("Autosave is now activated\n");
-                Savetofile(grades,n);
+                SaveToFile(grades,n);
             }
             else {
                 printf("Autosave is now disabled");
