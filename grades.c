@@ -160,8 +160,19 @@ void DeleteGrade(int *arr, int *size) {
     char choice = ReadYesNo("Confirm that you want to delete grade at the end (y/n)\n");
     if (choice == 'y')
     {
-        (*size)--;
+        int newsize = *size - 1;
+        if (newsize == 0 ) {
+            free(*arr);
+            printf("Grade succesfully deleted\n");
+            return;
+        }
+        int *temp = realloc(*arr, newsize * sizeof(int));
+        if (temp != NULL) {
+            *arr = temp;
+        }
+        *size = newsize;
+        
         printf("Grade succesfully deleted\n");
-
+        
     }
 }
