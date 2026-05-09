@@ -10,7 +10,7 @@
 
 void PrintMenu(void)
 {
-    printf("\nMenu\n"
+    printf("\n\nMenu\n"
            "1 - Print grades\n"
            "2 - Show max\n"
            "3 - Show average\n"
@@ -25,43 +25,53 @@ void PrintMenu(void)
            "12 - Toggle auto save\n"
            "0 - Exit\n");
 }
-void Savetofile(int *arr, int size) {
+bool Savetofile(int *arr, int size) {
      FILE* fptr = fopen(FILE_NAME, "w");
     if (fptr == NULL)
     {
-        printf("couldn't open file to save ");
-        return;
+        printf("couldn't open file to save \n");
+        return false;
     }
-
-    fprintf(fptr,"%d\n",size);
+    if (fprintf(fptr,"%d\n",size) < 0) {
+        printf("Save failed\n");
+        return false;
+    }
+    
     for (int i = 0; i < size; i++)
     {
        fprintf(fptr,"%d\n",arr[i]);
     }
     fclose(fptr);
+    return true;
 }
+
 
 bool Load_grades_from_file(int *arr, int size) {
     FILE* fptr = fopen(FILE_NAME, "r");
     if (fptr == NULL)
     {
+        printf("Couldn't open file\n");
         return false;
     }
     int arraysize;
-
-    fscanf(fptr,"%d",&arraysize);
+    if (fscanf(fptr,"%d",&arraysize) != 1) {
+        printf("load failed\n");
+        return false;
+    }
+    
     if (arraysize != size)
     {
         fclose(fptr);
         printf("file exist but student count doesn't match \n");
         return false;
     }
+    
     for (int i = 0; i < size; i++)
     {
         if (fscanf(fptr,"%d",&arr[i])!=1)
         {
             fclose(fptr);
-            printf("Error while reading file");
+            printf("Error while reading file\n");
             return false;
         }  
     }
@@ -83,13 +93,14 @@ int main(void)
         return 1;
     }
     int *grades = (int *)malloc(n * sizeof(int));
-    // Load_grades_from_file(grades,n);
+
     int choice = 0;
     bool exit = false;
     while (true)
     {
         PrintMenu();
         choice = ReadIntInRange("your choice\n", 0, 12);
+        printf("\n");
         switch (choice)
         {
         case 0:
@@ -99,6 +110,9 @@ int main(void)
                 if (HasGradesData == true) {
                     printGrades(grades, n);
                     printf("\n");
+                }
+                else {
+                    printf("not a valid message");
                 }
                 
             break;
@@ -112,24 +126,28 @@ int main(void)
                         int Max = findMax(grades, n);
                         printf("Max elements is: %d\n", Max);
                     }
-                    
+                    else  {
+                        printf("not a valid message\n");
+                    }
                 }
             break;
-        case 3:
+            case 3:
                 if (HasGradesData == true) {
                     printf("\n");
+                    
                     double group = findAverage(grades, n);
                     
-                    if (group >= 75)
-                    {
+                    if (group >= 75) {
                         printf("Good group result %f\n", group);
                     }
-                    else
-                    {
+                    else {
                         printf("Group result is not very strong %f\n", group);
                     }
                     
-                    
+                }
+                
+                else {
+                    printf("not a valid message\n");
                 }
             break;
 
@@ -138,6 +156,10 @@ int main(void)
                     printf("\n");
                     int count = countPassed(grades, n);
                     printf("Students passed %d\n", count);
+                }
+                
+                else {
+                    printf("not a valid message\n");
                 }
                 
             break;
@@ -149,12 +171,21 @@ int main(void)
                     printf("Students not passed %d\n", cfailed);
                     
                 }
+                else {
+                    printf("wrong messages\n");
+                }
                 
             break;
 
             case 6:
-            printf("Succesfully saved to file \n");
-            Savetofile(grades,n);
+                if (Savetofile(grades,n)) {
+                    printf("Succesfully saved to file \n");
+                    
+                }
+                else {
+                    printf("Savetofile failed\n");
+                }
+             
             break;
 
             case 7:
@@ -165,29 +196,37 @@ int main(void)
                 else {
                     printf("Failed to load from file \n");
                 }
-            
             break;
 
             case 8:
             inputGrades(grades,n);
                 HasGradesData = true;
+               
                     
             break;
             case 9:
                 if (HasGradesData == true) {
                     EditGrade(grades,n);
                 }
+                else {
+                    printf("wrong messages\n");
+                }
             if (Autosave == true)
             {
                 Savetofile(grades,n);
             }
+                
             break;
             case 10:
             AddGrade(&grades,&n);
                 HasGradesData = true;
+                
             if (Autosave == true)
             {
                 Savetofile(grades,n);
+            }
+            else {
+                printf("wrong messages\n");
             }
             break;
             case 11:
@@ -200,6 +239,9 @@ int main(void)
             }
                 if (n == 0) {
                     HasGradesData = false;
+                }
+                else {
+                    printf("wrong messages\n");
                 }
             
             break;
