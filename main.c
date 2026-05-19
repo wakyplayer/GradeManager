@@ -1,7 +1,12 @@
 #include "grades.h"
+#include "ui.h"
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+
 
 
 
@@ -99,7 +104,7 @@ int main(void)
     while (true)
     {
         PrintMenu();
-        choice = ReadIntInRange("your choice\n", 0, 12);
+        choice = UISelectMenuOption(HasGradesData,Autosave ,n );
         printf("\n");
         switch (choice)
         {
