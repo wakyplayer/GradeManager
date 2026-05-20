@@ -27,7 +27,10 @@ const struct  MenuItem Menuitems[] = {
 
 void StartNcurses(void) {
     initscr(); // initscr включает nсurses экран
+    cbreak();
+    noecho();
     keypad(stdscr, TRUE); // keypad позволяет принимать стрелочки
+    curs_set(0);
     
     
 
@@ -84,6 +87,18 @@ int MoveSelection(int Selected,int key) {
     
     
 }
+
+static int FindMenuItemByValue(int value)
+{
+    for (int i = 0; i < MenuSize; i++) {
+        if (Menuitems[i].value == value) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 int UISelectMenuOption(bool HasGradeData,bool AutoSave,int GradeCount) {
     int Selected = 0;
     int Result = 0;
@@ -108,6 +123,13 @@ int UISelectMenuOption(bool HasGradeData,bool AutoSave,int GradeCount) {
             Result = 0;
             break;
         }
+        else if (key >= '0' && key <= '9') {
+            int menuIndex = FindMenuItemByValue(key - '0');
+            if (menuIndex != -1) {
+                Result = Menuitems[menuIndex].value;
+                break;
+            }
+        }
     }
     
     
@@ -118,4 +140,44 @@ int UISelectMenuOption(bool HasGradeData,bool AutoSave,int GradeCount) {
     return Result;
 }
 
+void UIShowGrades(int *grades, int GradeCount, bool HasGradeData)
+{
+    StartNcurses();
 
+    clear();
+    box(stdscr, 0, 0);
+
+    mvprintw(1, 3, "Student Grades");
+
+    if (!HasGradeData) {
+        mvprintw(3, 3, "No grades available.");
+    } else if (GradeCount == 0) {
+        mvprintw(3, 3, "There are no students.");
+    } else {
+        mvprintw(3, 3, "Grades loaded: %d", GradeCount);
+
+        int visibleRows = LINES - 8;
+        if (visibleRows < 1) {
+            visibleRows = 1;
+        }
+
+        int gradesToShow = GradeCount;
+        if (gradesToShow > visibleRows) {
+            gradesToShow = visibleRows;
+        }
+
+        for (int i = 0; i < gradesToShow; i++) {
+            mvprintw(5 + i, 5, "Student %d: %d", i + 1, grades[i]);
+        }
+
+        if (gradesToShow < GradeCount) {
+            mvprintw(LINES - 3, 3, "Showing first %d of %d grades.", gradesToShow, GradeCount);
+        }
+    }
+
+    mvprintw(LINES - 2, 3, "Press any key to return to the menu.");
+    refresh();
+    getch();
+
+    StopNcurses();
+}

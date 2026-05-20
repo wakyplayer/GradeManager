@@ -103,7 +103,6 @@ int main(void)
     bool exit = false;
     while (true)
     {
-        PrintMenu();
         choice = UISelectMenuOption(HasGradesData,Autosave ,n );
         printf("\n");
         switch (choice)
@@ -112,13 +111,7 @@ int main(void)
             exit = true;
             break;
         case 1:
-                if (HasGradesData == true) {
-                    PrintGrades(grades, n);
-                    printf("\n");
-                }
-                else {
-                    printf("not a valid message");
-                }
+                UIShowGrades(grades, n, HasGradesData);
                 
             break;
         case 2:
